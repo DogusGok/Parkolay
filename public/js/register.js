@@ -1,7 +1,6 @@
-var a=document.getElementById("regis")
 a.onclick=function(){
-    var pass=document.getElementById("form3Example4cg").value;
-    var repass=document.getElementById("form3Example4cdg").value;
+    var pass=document.getElementById("bussines-pass").value;
+    var repass=document.getElementById("bussines-repass").value;
     if(pass==""){
         alert("Şifre Boş Bırakılamaz")
     }else if(pass!=repass){
@@ -10,3 +9,4 @@ a.onclick=function(){
         console.log("Başarılı")
     }
 }
+    
