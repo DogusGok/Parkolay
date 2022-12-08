@@ -1,0 +1,12 @@
+.activate-form .is-active { 
+    background: rgb(72, 74, 74);
+}
+.custom-register{ 
+    display: none; 
+}
+.custom-register.is-active { 
+    display: block; 
+}
+body{
+    background-color: red;
+}

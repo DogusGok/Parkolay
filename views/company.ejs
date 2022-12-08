@@ -12,15 +12,65 @@
     <link rel="stylesheet" href="/css/index.css" />
   </head>
   <body>
-    <%- include("partials/sidebar"); -%>
-    <div
-      style="
-        margin-left: 250px;
-        background-color: black;
-        height: 100%;
-        width: 100%;
-      "
-    ></div>
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <img
+          class="logo-img"
+          src="/images/parkolay-logo-removebg-preview.png"
+        />
+        <i class="logo-icon uil uil-parking-square"></i>
+      </header>
+      <nav>
+        <button>
+            <span>
+              <i class="uil uil-user"></i>
+              <span>Profil</span>
+            </span>
+          </button>
+        <button>
+          <span>
+            <i class="uil uil-search"></i>
+            <span>Arama</span>
+          </span>
+        </button>
+        <button>
+          <span>
+            <i class="uil uil-bell">
+              <span>13</span>
+            </i>
+            <span>Kampanyalar</span>
+          </span>
+        </button>
+        <button>
+          <span>
+            <i class="uil uil-car">
+              <span>2</span>
+            </i>
+            <span>Otoparkım</span>
+          </span>
+        </button>
+        <button>
+          <span>
+            <i class="uil uil-plus-circle"> </i>
+            <span>Create</span>
+          </span>
+        </button>
+        
+        <button>
+            <span>
+              <i class="uil uil-setting"></i>
+              <span>Ayarlar</span>
+            </span>
+          </button>
+          <button>
+        <button>
+          <span>
+            <i class="uil uil-bars"> </i>
+            <span>More</span>
+          </span>
+        </button>
+      </nav>
+    </aside>
     <script src="../login.js"></script>
   </body>
 </html>
