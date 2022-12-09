@@ -1,12 +1,18 @@
-.activate-form .is-active { 
-    background: rgb(72, 74, 74);
+.activate-form.is-active {
+  background-color: #007bff;
+  color: white;
 }
-.custom-register{ 
-    display: none; 
+.activate-form {
+  width: 100rem;
+  margin: 0 5px 35px 0;
 }
-.custom-register.is-active { 
-    display: block; 
+
+.custom-register {
+  display: none;
 }
-body{
-    background-color: red;
+.custom-register.is-active {
+  display: block;
+}
+body {
+  background-color: grey;
 }

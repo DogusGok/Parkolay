@@ -6,7 +6,7 @@ const app = express();
 const _ = require("lodash");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + "/public"));
 
 var mysql = require("mysql");
 const connection = mysql.createConnection({
@@ -28,7 +28,7 @@ app.get("/company", function (req, res) {
 app.get("/admin", function (req, res) {
   res.render("admin");
 });
-app.get("/register", function(req,res){
+app.get("/register", function (req, res) {
   res.render("register");
 });
 
