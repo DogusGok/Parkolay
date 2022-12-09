@@ -1,7 +1,6 @@
-var a = document.getElementById("regis");
 a.onclick = function () {
-  var pass = document.getElementById("password").value;
-  var repass = document.getElementById("rpassword").value;
+  var pass = document.getElementById("bussines-pass").value;
+  var repass = document.getElementById("bussines-repass").value;
   if (pass == "") {
     alert("Şifre Boş Bırakılamaz");
   } else if (pass != repass) {

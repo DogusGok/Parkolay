@@ -274,19 +274,23 @@
           </div>
         </div>
       </div>
-    </section>
-    <script>
-      jQuery(($) => {
-        const $actForms = $(".custom-register");
-        const $actFormsBtns = $(".activate-form");
+    </div>
+  </div>
+</section>
 
-        $actFormsBtns.on("click", function () {
-          $actFormsBtns.add($actForms).removeClass("is-active");
-          $(this).add($(this.dataset.target)).addClass("is-active");
-        });
-      });
-    </script>
-    <script type="text/js" src="/public/js/register.js"></script>
-    <script type="text/js" src="/index.js"></script>
-  </body>
-</html>
+<script type="text/js" src="js/register.js"></script>
+<script type="text/js" src="/index.js"></script>
+<script>
+jQuery(($) => {
+
+  const $actForms = $(".custom-register");
+  const $actFormsBtns = $(".activate-form");
+
+  $actFormsBtns.on("click", function() {
+    $actFormsBtns.add($actForms).removeClass("is-active");
+    $(this).add($(this.dataset.target)).addClass("is-active");
+  });
+
+});
+</script>
+</body>
