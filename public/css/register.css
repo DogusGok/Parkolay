@@ -14,5 +14,9 @@
   display: block;
 }
 body {
-  background-color: grey;
+  background-image: url("../images/5559852.jpg");
+}
+.existMail {
+  border: 1px solid red;
+  color: red;
 }

@@ -54,6 +54,41 @@ app.post("/", function (req, res) {
     );
   });
 });
+app.get("/register/:userType", function (req, res) {
+  const userType = req.params.userType;
+  if (userType == "user") {
+    res.render("user-register");
+  } else if (userType == "company") {
+    res.render("company-register");
+  } else throw Error;
+});
+app.post("/register/:userType", function (req, res) {
+  const userType = req.params.userType;
+  const mail = req.body.mail;
+  const pass = req.body.password;
+  if (userType == "user" || userType == "company") {
+    connection.query(
+      "SELECT email from accounts where email=?",
+      [mail],
+      function (err, results) {
+        if (results.length != 0) {
+          console.log(mail);
+          console.log("zaten mevcut");
+        } else {
+          connection.query(
+            "INSERT accounts  (account_type,email,password) VALUES (?,?,?)",
+            [userType, mail, pass],
+            function (err, results) {
+              if (err) throw err;
+              console.log("kayıt başarılı");
+              res.redirect("/");
+            }
+          );
+        }
+      }
+    );
+  } else throw Error;
+});
 app.listen(3000, function () {
   console.log("server started!");
 });
