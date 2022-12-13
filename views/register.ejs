@@ -34,27 +34,26 @@
               <div class="card" style="border-radius: 15px;margin-top: 77px;" >
                 <div class="card-body p-5">
                   <h2 class="text-uppercase text-center mb-5">
-                    Create an account
+                    PARKOLAY
                   </h2>
                   <div class="d-flex justify-content-center">
-                    <button
-                      id="user_button"
-                      type="button"
-                      data-target="#user-form"
-                      class="btn activate-form"
+                    <a
+                     href="/register/user"
+                     class="btn btn-primary activate-form"
                     >
                       Kullanıcı
-                    </button>
-                    <button
-                      id="company_user"
-                      type="button"
-                      data-target="#bussines-form"
-                      class="btn activate-form"
+                  </a>
+                    <a
+                    class="btn btn-primary activate-form"
+
+                     href="/register/company"
+        
                     >
                       Şirket
-                    </button>
+                </a>
                   </div>
 
+<<<<<<< Updated upstream
                   <div id="user-form" class="custom-register">
                     <form action="" method="post">
                       <div class="form-outline mb-4">
@@ -268,6 +267,9 @@
                       </div>
                     </form>
                   </div>
+=======
+                  
+>>>>>>> Stashed changes
                 </div>
               </div>
             </div>
@@ -278,19 +280,6 @@
   </div>
 </section>
 
-<script type="text/js" src="js/register.js"></script>
+
 <script type="text/js" src="/index.js"></script>
-<script>
-jQuery(($) => {
-
-  const $actForms = $(".custom-register");
-  const $actFormsBtns = $(".activate-form");
-
-  $actFormsBtns.on("click", function() {
-    $actFormsBtns.add($actForms).removeClass("is-active");
-    $(this).add($(this.dataset.target)).addClass("is-active");
-  });
-
-});
-</script>
 </body>

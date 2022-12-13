@@ -20,28 +20,76 @@
     <title>Login</title>
   </head>
   <body>
-    <div class="login">
-      <div>
-        <img
-          class="login-icon"
-          src="/images/parkolay-logo-removebg-preview.png"
-        />
+    <div class="header">
+      <!--Content before waves-->
+      <div class="inner-header flex">
+        <!--Just the logo.. Don't mind this-->
+        <div class="login">
+          <div>
+            <img
+              class="login-icon"
+              src="/images/parkolay-logo-removebg-preview.png"
+            />
+          </div>
+
+          <form class="login-form" action="" , method="post">
+            <div class="textbox">
+              <input type="username" placeholder="Username" name="username" />
+              <span class="material-symbols-outlined"> account_circle </span>
+            </div>
+            <div class="textbox">
+              <input type="password" placeholder="Password" name="password" />
+              <span class="material-symbols-outlined"> lock </span>
+            </div>
+            <button type="submit">LOGIN</button>
+            <a href="">Şifreni mi unuttun?</a>
+            <a href="/register">Kayıt Ol</a>
+          </form>
+        </div>
       </div>
 
-      <form class="login-form" action="" , method="post">
-        <div class="textbox">
-          <input type="username" placeholder="Username" name="username" />
-          <span class="material-symbols-outlined"> account_circle </span>
-        </div>
-        <div class="textbox">
-          <input type="password" placeholder="Password" name="password" />
-          <span class="material-symbols-outlined"> lock </span>
-        </div>
-        <button type="submit">LOGIN</button>
-        <a href="">Şifreni mi unuttun?</a>
-        <a href="/register">Kayıt Ol</a>
-      </form>
+      <!--Waves Container-->
+      <div>
+        <svg
+          class="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shape-rendering="auto"
+        >
+          <defs>
+            <path
+              id="gentle-wave"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            />
+          </defs>
+          <g class="parallax">
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="0"
+              fill="rgba(255,255,255,0.7"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="3"
+              fill="rgba(255,255,255,0.5)"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="5"
+              fill="rgba(255,255,255,0.3)"
+            />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+          </g>
+        </svg>
+      </div>
+      <!--Waves end-->
     </div>
+
     <script type="text/js" src="/index.js"></script>
   </body>
 </html>
