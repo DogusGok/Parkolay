@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parkolay</title>
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://kit.fontawesome.com/5b0a102317.js"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://code.jquery.com/jquery-3.6.1.js"
+    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"
+  ></script>
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+  <style>
+    #int{
+        background-size: cover;
+        min-height: 100vh;
+        position: relative;
+        text-shadow: 2px 2px 2px rgba(0, 0,0 ,0.2);
+    }
+  </style>
+  <body id="int" class="ml-5" style="background-image: url('/images/parkback.jpg'); height: 100vh;">
+    <%- include("./partials/sidebar") %>
+  <section class="bg-image" >
+    <div class="container h-100">
+      <div
+        class="row d-flex justify-content-center align-items-center h-100"
+        >
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;margin-top: 77px;" >
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-5">
+                Araç Ekle
+              </h2>
+              <div class="d-flex justify-content-center">
+   
+   
+   
+                <form action="" method="post">
+                  <div class="form-outline mb-4">
+                  <label for="carplate">Plakanız</label>
+                  <input name="carplate" type="text">
+                </div>
+                <div class="form-outline mb-4">
+                  <label for="fuel">Yakıt Türü</label>
+                  <input name="fuel" type="text">
+                </div>
+                
+
+                  <div class="d-flex justify-content-center">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
+                      id="arac_reg"
+                      name="submit"
+                    >
+                      Add Car
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+                
+    
+  </body>
+</html>
