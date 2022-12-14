@@ -36,8 +36,16 @@
                     <h2 class="text-uppercase text-center mb-5">
                       PARKOLAY
                     </h2>
-
-  
+                  
+                    <% if (error!="") { %>
+                      <div class='alert alert-danger text-center'>
+                        <i class='fas fa-exclamation-triangle'></i><%- error %> 
+                    </div>
+                    <% } %>
+                     
+                   
+                     
+                    
                     <div id="bussines-form" >
                       <form action="" method="post">
                         <div class="form-outline mb-4">
