@@ -1,12 +1,24 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");  
+const sessions = require('express-session');
 const ejs = require("ejs");
 const app = express();
 const _ = require("lodash");
+const db=require("./database");
 
 
+const ahour=1000*60*60;
+app.use(sessions({
+  secret:"skimboyleprojeyi",
+  saveUninitialized:true,
+  cookie:{maxAge:ahour},
+  resave:false
+}))
+app.use(express.json());
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 var mysql = require("mysql");
 const connection = mysql.createConnection({
   host: "remotemysql.com",
@@ -15,46 +27,60 @@ const connection = mysql.createConnection({
   database: "xRrfTdEb8w",
 });
 
+var session;
 app.use(express.static(__dirname + "/public"));
 
 app.get("/", function (req, res) {
   res.render("login");
 });
-app.get("/user",(req,res)=>{
-  res.render("user");
+app.get("/user/:userId",(req,res)=>{
+  session=req.session;
+  if(session.userId==req.params.userId){
+    res.render("user",{username:session.userId});
+  }else{
+    res.redirect("/");
+  }
+  
 })
 app.get("/user/arac", function (req, res) {
-  res.render("arac");
+  req.session.destroy()
+  res.render("user");
 });
-app.get("/company", function (req, res) {
-  res.render("company");
+app.get("/company/:id", function (req, res) {
+  session=req.session;
+
+  console.log(session.userId);
+  if(session.userId==req.params.id){
+    res.render("company");
+  }else{
+    res.redirect("/");
+  }
 });
 app.get("/admin", function (req, res) {
-  res.render("admin");
+    res.render("admin");
+  
 });
 app.get("/register", function (req, res) {
   res.render("register");
 });
 
-
 app.post("/", function (req, res) {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
-  connection.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-    connection.query(
-      "SELECT username, password,user_type FROM user WHERE username = ? AND password = ?",
-      [username, password],
-      function (err, results) {
-        if (results) {
-          res.redirect("/user");
-        } else throw err;
-      }
-    );
+  db.getUser(email,password,function(results){
+    console.log(results);
+  if(results!=0){
+    session=req.session;
+    session.userId=results[0].account_id;
+    res.redirect("/"+results[0].account_type+"/"+results[0].account_id);
+  }
   });
+  
+
 });
+
+
 app.get("/register/:userType", function (req, res) {
   const userType = req.params.userType;
   if (userType == "user") {
@@ -70,38 +96,32 @@ app.post("/register/:userType", function (req, res) {
   const mail = req.body.mail;
   
   const pass = req.body.password;
-  const repas=req.body.confirm;
+  const repas=req.body.rpassword;
   console.log(repas);
   if(repas!=pass){
     if(userType=="user"){
       res.render("user-register",{error:"Şifreler eşleşmiyor"});
-      console.log(repas);
+
     }else if(userType=="company")
     {
       res.render("company-register",{error:"Şifreler eşleşmiyor"});
     }else throw Error;
   }else{
     if (userType == "user" || userType == "company") {
-      connection.query(
-        "SELECT email from accounts where email=?",
-        [mail],
-        function (err, results) {
-          if (results.length != 0) {
-            console.log(mail);
-            console.log("zaten mevcut");
-          } else {
-            connection.query(
-              "INSERT accounts  (account_type,email,password) VALUES (?,?,?)",
-              [userType, mail, pass],
-              function (err, results) {
-                if (err) throw err;
-                console.log("kayıt başarılı");
-                res.redirect("/");
-              }
-            );
-          }
+      
+      db.isEmailExist(mail,result=>{
+        if(result){
+          res.render(userType+"-register",{error:"Mail kullanılmaktadır"});
+        }else{
+          db.insertUser(userType,mail,pass,(val)=>{
+            if(val){
+              console.log("Kayıt oluşturuldu");
+              res.redirect("/");
+            }
+          })
         }
-      );
+      })
+
     } else throw Error;
   }
  
