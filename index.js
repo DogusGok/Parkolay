@@ -4,7 +4,6 @@ const ejs = require("ejs");
 const app = express();
 const _ = require("lodash");
 
-
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 var mysql = require("mysql");
@@ -18,11 +17,11 @@ const connection = mysql.createConnection({
 app.use(express.static(__dirname + "/public"));
 
 app.get("/", function (req, res) {
-  res.render("login");
+  res.render("login", { error: "" });
 });
-app.get("/user",(req,res)=>{
+app.get("/user", (req, res) => {
   res.render("user");
-})
+});
 app.get("/user/arac", function (req, res) {
   res.render("arac");
 });
@@ -35,64 +34,78 @@ app.get("/admin", function (req, res) {
 app.get("/register", function (req, res) {
   res.render("register");
 });
-
+app.get("/:accountType/:accountId", function (req, res) {
+  const accountType = req.params.accountType;
+});
 
 app.post("/", function (req, res) {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
-  connection.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-    connection.query(
-      "SELECT username, password,user_type FROM user WHERE username = ? AND password = ?",
-      [username, password],
-      function (err, results) {
-        if (results) {
-          res.redirect("/user");
-        } else throw err;
+  connection.query(
+    "SELECT email, password,account_type,account_id FROM accounts WHERE email =" +
+      connection.escape(email) +
+      " AND password =" +
+      connection.escape(password),
+    function (err, results) {
+      if (err) {
+        throw err;
       }
-    );
-  });
+      if (results.length != 0) {
+        if (email == results[0].email && password == results[0].password) {
+          res.redirect(
+            "/" + results[0].account_type + "/" + results[0].account_id
+          );
+        }
+      } else {
+        res.render("login", {
+          error: "Email veya şifre yanlış lütfen kontrol ediniz",
+        });
+      }
+    }
+  );
 });
-app.get("/register/:userType", function (req, res) {
-  const userType = req.params.userType;
-  if (userType == "user") {
+app.get("/register/:accountType", function (req, res) {
+  const accountType = req.params.accountType;
+  if (accountType == "user") {
     res.render("user-register");
-  } else if (userType == "company") {
-    res.render("company-register",{error:""});
+  } else if (accountType == "company") {
+    res.render("company-register", { error: "" });
   } else throw Error;
 });
 
+app.post("/register/:accountType", function (req, res) {
+  const accountType = req.params.accountType;
+  const email = req.body.email;
 
-app.post("/register/:userType", function (req, res) {
-  const userType = req.params.userType;
-  const mail = req.body.mail;
-  
   const pass = req.body.password;
-  const repas=req.body.confirm;
+  const repas = req.body.confirm;
   console.log(repas);
-  if(repas!=pass){
-    if(userType=="user"){
-      res.render("user-register",{error:"Şifreler eşleşmiyor"});
+  if (repas != pass) {
+    if (accountType == "user") {
+      res.render("user-register", { error: "Şifreler eşleşmiyor" });
       console.log(repas);
-    }else if(userType=="company")
-    {
-      res.render("company-register",{error:"Şifreler eşleşmiyor"});
-    }else throw Error;
-  }else{
-    if (userType == "user" || userType == "company") {
+    } else if (accountType == "company") {
+      res.render("company-register", { error: "Şifreler eşleşmiyor" });
+    } else throw Error;
+  } else {
+    if (accountType == "user" || accountType == "company") {
       connection.query(
         "SELECT email from accounts where email=?",
-        [mail],
+        [email],
         function (err, results) {
           if (results.length != 0) {
-            console.log(mail);
+            console.log(email);
             console.log("zaten mevcut");
           } else {
             connection.query(
-              "INSERT accounts  (account_type,email,password) VALUES (?,?,?)",
-              [userType, mail, pass],
+              "INSERT INTO accounts  (account_type,email,password) VALUES (" +
+                connection.escape(accountType) +
+                "," +
+                connection.escape(email) +
+                "," +
+                connection.escape(pass) +
+                ");INSERT INTO ",
               function (err, results) {
                 if (err) throw err;
                 console.log("kayıt başarılı");
@@ -104,7 +117,6 @@ app.post("/register/:userType", function (req, res) {
       );
     } else throw Error;
   }
- 
 });
 app.listen(3000, function () {
   console.log("server started!");
