@@ -1,11 +1,25 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const sessions = require("express-session");
 const ejs = require("ejs");
 const app = express();
 const _ = require("lodash");
+const db = require("./database");
 
+const ahour = 1000 * 60 * 60;
+app.use(
+  sessions({
+    secret: "skimboyleprojeyi",
+    saveUninitialized: true,
+    cookie: { maxAge: ahour },
+    resave: false,
+  })
+);
+app.use(express.json());
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 var mysql = require("mysql");
 const connection = mysql.createConnection({
   host: "remotemysql.com",
@@ -14,19 +28,33 @@ const connection = mysql.createConnection({
   database: "xRrfTdEb8w",
 });
 
+var session;
 app.use(express.static(__dirname + "/public"));
 
 app.get("/", function (req, res) {
   res.render("login", { error: "" });
 });
-app.get("/user", (req, res) => {
-  res.render("user");
+app.get("/user/:userId", (req, res) => {
+  session = req.session;
+  if (session.userId == req.params.userId) {
+    res.render("user", { username: session.userId });
+  } else {
+    res.redirect("/");
+  }
 });
 app.get("/user/arac", function (req, res) {
-  res.render("arac");
+  req.session.destroy();
+  res.render("user");
 });
-app.get("/company", function (req, res) {
-  res.render("company");
+app.get("/company/:id", function (req, res) {
+  session = req.session;
+
+  console.log(session.userId);
+  if (session.userId == req.params.id) {
+    res.render("company");
+  } else {
+    res.redirect("/");
+  }
 });
 app.get("/admin", function (req, res) {
   res.render("admin");
@@ -42,32 +70,19 @@ app.post("/", function (req, res) {
   const email = req.body.email;
   const password = req.body.password;
 
-  connection.query(
-    "SELECT email, password,account_type,account_id FROM accounts WHERE email =" +
-      connection.escape(email) +
-      " AND password =" +
-      connection.escape(password),
-    function (err, results) {
-      if (err) {
-        throw err;
-      }
-      if (results.length != 0) {
-        if (email == results[0].email && password == results[0].password) {
-          res.redirect(
-            "/" + results[0].account_type + "/" + results[0].account_id
-          );
-        }
-      } else {
-        res.render("login", {
-          error: "Email veya şifre yanlış lütfen kontrol ediniz",
-        });
-      }
+  db.getUser(email, password, function (results) {
+    console.log(results);
+    if (results != 0) {
+      session = req.session;
+      session.userId = results[0].account_id;
+      res.redirect("/" + results[0].account_type + "/" + results[0].account_id);
     }
-  );
+  });
 });
-app.get("/register/:accountType", function (req, res) {
-  const accountType = req.params.accountType;
-  if (accountType == "user") {
+
+app.get("/register/:userType", function (req, res) {
+  const userType = req.params.userType;
+  if (userType == "user") {
     res.render("user-register");
   } else if (accountType == "company") {
     res.render("company-register", { error: "" });
@@ -79,42 +94,30 @@ app.post("/register/:accountType", function (req, res) {
   const email = req.body.email;
 
   const pass = req.body.password;
-  const repas = req.body.confirm;
+  const repas = req.body.rpassword;
   console.log(repas);
   if (repas != pass) {
-    if (accountType == "user") {
+    if (userType == "user") {
       res.render("user-register", { error: "Şifreler eşleşmiyor" });
-      console.log(repas);
-    } else if (accountType == "company") {
+    } else if (userType == "company") {
       res.render("company-register", { error: "Şifreler eşleşmiyor" });
     } else throw Error;
   } else {
-    if (accountType == "user" || accountType == "company") {
-      connection.query(
-        "SELECT email from accounts where email=?",
-        [email],
-        function (err, results) {
-          if (results.length != 0) {
-            console.log(email);
-            console.log("zaten mevcut");
-          } else {
-            connection.query(
-              "INSERT INTO accounts  (account_type,email,password) VALUES (" +
-                connection.escape(accountType) +
-                "," +
-                connection.escape(email) +
-                "," +
-                connection.escape(pass) +
-                ");INSERT INTO ",
-              function (err, results) {
-                if (err) throw err;
-                console.log("kayıt başarılı");
-                res.redirect("/");
-              }
-            );
-          }
+    if (userType == "user" || userType == "company") {
+      db.isEmailExist(mail, (result) => {
+        if (result) {
+          res.render(userType + "-register", {
+            error: "Mail kullanılmaktadır",
+          });
+        } else {
+          db.insertUser(userType, mail, pass, (val) => {
+            if (val) {
+              console.log("Kayıt oluşturuldu");
+              res.redirect("/");
+            }
+          });
         }
-      );
+      });
     } else throw Error;
   }
 });
