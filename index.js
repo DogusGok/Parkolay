@@ -6,6 +6,7 @@ const ejs = require("ejs");
 const app = express();
 const _ = require("lodash");
 const db = require("./database");
+const { redirect } = require("statuses");
 
 const ahour = 1000 * 60 * 60;
 app.use(
@@ -45,50 +46,27 @@ app.get("/user/:userId", (req, res) => {
 app.get("/addArac", function (req, res) {
   console.log(session);
   res.redirect(
-    "/" + req.session.accountType + "/" + req.session.userId + "/addArac"
+    "/" + req.session.accountType +"/addArac"+"/"+req.session.userId
   );
 });
 app.get("/addOtopark", function (req, res) {
   console.log(session);
   res.redirect(
-    "/" + req.session.accountType + "/" + req.session.userId + "/addOtopark"
+    "/" + req.session.accountType + "/addOtopark"+ "/" + req.session.userId 
   );
 });
-app.get("/company/:userId/addOtopark", function (req, res) {
+app.get("/company/addOtopark/:userId", function (req, res) {
   if (session != undefined && session.userId == req.params.userId) {
     res.render("add-otopark", { error: "", success: "" });
   } else res.redirect("/");
 });
-app.get("/user/:userId/addArac", function (req, res) {
+app.get("/use/addAracr/:userId", function (req, res) {
   if (session != undefined && session.userId == req.params.userId) {
     res.render("add-arac", { error: "", success: "" });
   } else res.redirect("/");
 });
-app.post("/company/:userId/addOtopark", function (req, res) {
-  const sehir = "İstanbul";
-  const ilce = req.body.ilce;
-  const mahalle = req.body.mahalle;
-  const cadde = req.body.cadde;
-  const sokak = req.body.sokak;
-  const no = req.body.no;
-  if (session != undefined && session.userId == req.params.userId) {
-    db.isPlakaExist(plaka, function (result) {
-      if (result) {
-        res.render("arac", {
-          error: "Girilen plaka kullanılıyor!",
-          success: "",
-        });
-      } else {
-        db.insertArac(req.params.userId, plaka, fuelType, function (val) {
-          if (val) {
-            res.render("arac", { error: "", success: "Kayıt Tamamlandı" });
-          } else throw err;
-        });
-      }
-    });
-  } else res.redirect("/");
-});
-app.post("/user/:userId/addArac", function (req, res) {
+
+app.post("/user/addArac/:userId", function (req, res) {
   const plaka = req.body.carplate;
   const fuelType = req.body.fuel;
   if (session != undefined && session.userId == req.params.userId) {
@@ -198,6 +176,25 @@ app.post("/register/:accountType", function (req, res) {
     } else throw Error;
   }
 });
+
+app.post("/company/addOtopark/:userId",(req,res)=>{
+  session=req.session;
+  const ilce=req.body.ilce;
+  const mahalle=req.body.mahalle;
+  const cadde=req.body.cadde;
+  const sokak=req.body.sokak;
+  const no=req.body.no;
+  if(session.userId==req.params.userId && session.accountType=="company"){
+
+    db.insertPark(ilce,mahalle,cadde,sokak,no,(call)=>{
+      if(call){
+        res.render("add-otopark",{success:"Kayıt tamamlandı"});
+      }
+    });
+  
+
+  }
+})
 
 app.get("/logout", function (req, res) {
   req.session.destroy((err) => {

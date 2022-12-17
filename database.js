@@ -153,3 +153,23 @@ exports.insertArac = (user_id, plaka, fuel_type, callback) => {
     }
   );
 };
+
+exports.insertPark=(ilce,mahalle,cadde,sokak,no,callback)=>{
+  connection.query(
+    "INSERT INTO Address (sehir,ilce,mahalle,cadde,sokak,yer_no) VALUES(" +
+      connection.escape("İstanbul") +
+      "," +
+      connection.escape(ilce) +","+
+      connection.escape(mahalle) +","+
+      connection.escape(cadde) +","+
+      connection.escape(sokak) +","+
+      connection.escape(no)+
+      ");",
+    function (err, result) {
+      if (err) throw err;
+      else{
+        return callback(true);
+      }
+    }
+  );
+}
