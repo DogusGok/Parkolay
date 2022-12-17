@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parkolay</title>
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/5b0a102317.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+  <style>
+    #int {
+      background-size: cover;
+      min-height: 100vh;
+      position: relative;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+  <body
+    id="int"
+    style="background-image: url('/images/parkback.jpg'); height: 100vh"
+  >
+    <%- include("./partials/user-sidebar") %>
+    <section class="main-content">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px">
+              <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">Araç Ekle</h2>
+                <% if (error!="") { %>
+                <div class="alert alert-danger text-center">
+                  <i class="fas fa-exclamation-triangle"></i><%- error %>
+                </div>
+                <% } %> <% if (success!="") { %>
+                <div class="alert alert-success text-center">
+                  <i class="fas fa-exclamation-check"></i><%- success %>
+                </div>
+                <% } %>
+                <div class="d-flex justify-content-center">
+                  <form action="" method="post">
+                    <div class="form-outline mb-4">
+                      <label for="carplate" class="ml-2">Plakanız</label>
+                      <span class="row"
+                        ><i class="uil uil-car mt-auto mb-auto mr-2"></i>
+                        <span
+                          ><input
+                            class="form-control form-control-lg"
+                            name="carplate"
+                            type="text" /></span
+                      ></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label for="fuel" class="ml-2">Yakıt Türü</label>
+                      <span class="row">
+                        <i class="uil uil-pump mt-auto mb-auto mr-2"></i>
+                        <span
+                          ><input
+                            class="form-control form-control-lg"
+                            name="fuel"
+                            type="text"
+                          />
+                        </span>
+                      </span>
+                    </div>
+
+                    <div class="ml-4 d-flex justify-content-center">
+                      <button
+                        type="submit"
+                        class="btn btn-primary btn-block btn-lg"
+                        id="arac_reg"
+                        name="submit"
+                      >
+                        Add Car
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -31,7 +31,11 @@
               src="/images/parkolay-logo-removebg-preview.png"
             />
           </div>
-
+          <% if (error!="") { %>
+          <div class="alert alert-danger text-center">
+            <i class="fas fa-exclamation-triangle"></i><%- error %>
+          </div>
+          <% } %>
           <form class="login-form" action="" , method="post">
             <div class="textbox">
               <input type="email" placeholder="Email" name="email" />

@@ -19,14 +19,7 @@
           <span>Arama</span>
         </span>
       </button>
-      <button>
-        <span>
-          <i class="uil uil-bell">
-            <span>13</span>
-          </i>
-          <span>Kampanyalar</span>
-        </span>
-      </button>
+      
       <button>
         <span>
           <i class="uil uil-car">
@@ -35,10 +28,10 @@
           <span>Otoparkım</span>
         </span>
       </button>
-      <button>
+      <button onclick="window.location.href = '/addOtopark'">
         <span>
           <i class="uil uil-plus-circle"> </i>
-          <span>Create</span>
+          <span>Otopark Ekle</span>
         </span>
       </button>
       
@@ -48,13 +41,18 @@
             <span>Ayarlar</span>
           </span>
         </button>
-        <button>
-      <button>
-        <span>
-          <i class="uil uil-bars"> </i>
-          <span>More</span>
-        </span>
-      </button>
+        <button id="logout-button">
+            <span>
+              <iconify-icon icon="majesticons:door-exit-line" width="30" height="30"></iconify-icon>
+              <span style="color: red;">Çıkış</span>
+            </span>
+          </button>
     </nav>
   </aside>
 </div>
+<script>
+    document.getElementById("logout-button").addEventListener("click", function() {
+    window.location.href = "/logout";
+  });
+  </script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>

@@ -7,8 +7,11 @@ body {
   background: #fafafa;
   color: #262626;
   font-family: BlinkMacSystemFont;
+  margin-left: 255px;
 }
-
+.main-content {
+  margin-top: 77px;
+}
 .sidebar {
   position: fixed;
   top: 0;
@@ -95,6 +98,9 @@ body {
   .sidebar button > span > span {
     opacity: 0;
     visibility: hidden;
+  }
+  body {
+    margin-left: 72px;
   }
 }
 
