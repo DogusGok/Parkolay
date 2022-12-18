@@ -44,10 +44,23 @@ app.get("/user/:userId", (req, res) => {
   }
 });
 app.get("/addArac", function (req, res) {
-  console.log(session);
-  res.redirect(
-    "/" + req.session.accountType +"/addArac"+"/"+req.session.userId
-  );
+  if(session==req.session){
+    res.redirect(
+      "/" + req.session.accountType +"/addArac"+"/"+req.session.userId
+    );  
+  }else{
+    res.redirect("/");
+  }
+  
+});
+
+app.get("/selectpark",(req,res)=>{
+  const ilce="bağcılar"
+  db.getParkfromDistrict(ilce,(result)=>{
+    res.render("select-park",{result:result});
+  })
+
+  
 });
 app.get("/addOtopark", function (req, res) {
   console.log(session);
@@ -60,12 +73,15 @@ app.get("/company/addOtopark/:userId", function (req, res) {
     res.render("add-otopark", { error: "", success: "" });
   } else res.redirect("/");
 });
-app.get("/use/addAracr/:userId", function (req, res) {
+app.get("/user/addArac/:userId", function (req, res) {
   if (session != undefined && session.userId == req.params.userId) {
     res.render("add-arac", { error: "", success: "" });
   } else res.redirect("/");
 });
 
+app.get("/invoice",(req,res)=>{
+  res.render("invoice");
+});
 app.post("/user/addArac/:userId", function (req, res) {
   const plaka = req.body.carplate;
   const fuelType = req.body.fuel;
@@ -109,7 +125,6 @@ app.post("/", function (req, res) {
   const password = req.body.password;
 
   db.getUser(email, password, function (results) {
-    console.log(results);
     if (results != 0) {
       session = req.session;
       session.userId = results[0].account_id;
@@ -179,16 +194,20 @@ app.post("/register/:accountType", function (req, res) {
 
 app.post("/company/addOtopark/:userId",(req,res)=>{
   session=req.session;
+  const isim=req.body.name;
   const ilce=req.body.ilce;
   const mahalle=req.body.mahalle;
   const cadde=req.body.cadde;
   const sokak=req.body.sokak;
   const no=req.body.no;
+  const kapasite=req.body.kapasite;
+  const fiyat=req.body.ücret;
   if(session.userId==req.params.userId && session.accountType=="company"){
 
-    db.insertPark(ilce,mahalle,cadde,sokak,no,(call)=>{
+    db.insertPark(isim,ilce,mahalle,cadde,sokak,no,kapasite,fiyat,(call)=>{
       if(call){
-        res.render("add-otopark",{success:"Kayıt tamamlandı"});
+
+        res.render("add-otopark",{error:"",success:"Otopark kayıt edildi baby !"})
       }
     });
   

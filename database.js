@@ -154,7 +154,7 @@ exports.insertArac = (user_id, plaka, fuel_type, callback) => {
   );
 };
 
-exports.insertPark=(ilce,mahalle,cadde,sokak,no,callback)=>{
+exports.insertPark=(isim,ilce,mahalle,cadde,sokak,no,kapasite,ucret,callback)=>{
   connection.query(
     "INSERT INTO Address (sehir,ilce,mahalle,cadde,sokak,yer_no) VALUES(" +
       connection.escape("İstanbul") +
@@ -168,8 +168,38 @@ exports.insertPark=(ilce,mahalle,cadde,sokak,no,callback)=>{
     function (err, result) {
       if (err) throw err;
       else{
-        return callback(true);
+        connection.query(
+          "INSERT INTO otopark (name,kapasite,saatlik_ücret,address_id) VALUES(" +
+     
+      connection.escape(kapasite) +","+
+      connection.escape(ucret)+","+
+      connection.escape(result.insertId)+
+      ");",(err,result)=>{
+        if(err) throw err;
+        else{
+          callback(true);
+        }
+      }
+        )
       }
     }
   );
 }
+
+exports.getParkfromDistrict=(ilce,callback)=>{
+  connection.query(
+    "SELECT otopark.name,otopark.saatlik_ücret,Address.ilce, otopark.kapasite FROM otopark INNER JOIN Address ON Address.address_id=otopark.address_id WHERE Address.ilce="+
+    connection.escape(ilce),
+    (err,results)=>{
+      if(err) throw Error
+      else{
+        return callback(results);
+      }
+    }
+    
+
+    )}
+
+  exports.getInvoice=()=>{
+
+  }
