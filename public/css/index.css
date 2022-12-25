@@ -77,8 +77,16 @@ body {
 .sidebar button > span > span {
   transition: 0.3s;
 }
-
+.filter {
+  display: none;
+}
 @media (width < 580px) {
+  .main-filter {
+    display: none;
+  }
+  .filter {
+    display: block;
+  }
   .logo-img {
     display: none;
   }

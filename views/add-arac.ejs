@@ -70,16 +70,16 @@
                     </div>
                     <div class="form-outline mb-4">
                       <label for="fuel" class="ml-2">Yakıt Türü</label>
-                      <span class="row">
-                        <i class="uil uil-pump mt-auto mb-auto mr-2"></i>
-                        <span
-                          ><input
-                            class="form-control form-control-lg"
-                            name="fuel"
-                            type="text"
-                          />
-                        </span>
-                      </span>
+                      <select
+                        name="fuel"
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option value="" selected>Yakıt Tipi Seçiniz</option>
+                        <option value="benzin">Benzin</option>
+                        <option value="diesel">Diesel</option>
+                        <option value="lpg">LPG</option>
+                      </select>
                     </div>
 
                     <div class="ml-4 d-flex justify-content-center">
@@ -89,7 +89,7 @@
                         id="arac_reg"
                         name="submit"
                       >
-                        Add Car
+                        Ekle
                       </button>
                     </div>
                   </form>

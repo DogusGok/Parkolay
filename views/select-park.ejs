@@ -20,13 +20,6 @@
 </head>
 <body>
     <div class="container">
-
-      <form action="" method="get">
-        <label for="location">Otopark Aramak İstediğiniz İlçeyi Giriniz!</label>
-        <input type="text">
-        <button type="submit">Ara</button>
-      </form>
-
     <table class="table align-middle mb-0 bg-white">
         <thead class="bg-light">
           <tr>
@@ -34,21 +27,13 @@
             <th>Saatlik Ücreti</th>
             <th>Otopark Konum</th>
             <th>Mevcut Boş Yer</th>
-            <th></th> 
+            <th></th>
           </tr>
         </thead>
         <tbody>
-            <% if (result.length==0) { %>
-             <tr>
-              <td>
-                <div class="alert alert-danger text-center">
-                  <i class="fas fa-exclamation-triangle"></i>Aradığınız adreste uygun otopark bulunamadı !
-                </div>
-              </td>
-             </tr>
+            
 
-            <% }else{ %> 
-              <% result.forEach(element => { %>
+            <% result.forEach(element => { %>
                 <tr>
                     <td>
                       <div class='d-flex align-items-center'>
@@ -79,9 +64,6 @@
                   </tr>
              
             <% }) %>
-              <% } %> 
-
-           
 
           
           

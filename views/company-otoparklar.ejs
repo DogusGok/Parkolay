@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/5b0a102317.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/index.css" />
+    <title>Parkolay</title>
+  </head>
+  <body>
+    <%- include("./partials/company-sidebar") %>
+
+    <div
+      class="main-content main-filter p-5 ms-3 me-3"
+      style="border: 1px solid"
+    >
+      <form action="" method="post">
+        <div class="row g-3">
+          <div class="col-lg-2">
+            <label for="ilce" class="col-sm-2 col-form-label">İlçe</label>
+            <select
+              name="ilce"
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option value="" selected>İlçe Seçiniz</option>
+              <option value="adalar">Adalar</option>
+              <option value="arnavutköy">Arnavutköy</option>
+              <option value="ataşehir">Ataşehir</option>
+              <option value="avcılar">Avcılar</option>
+              <option value="bağcılar">Bağcılar</option>
+              <option value="bahçelievler">Bahçelievler</option>
+              <option value="bakırköy">Bakırköy</option>
+              <option value="başakşehir">Başakşehir</option>
+              <option value="bayrampaşa">Bayrampaşa</option>
+              <option value="beşiktaş">Beşiktaş</option>
+              <option value="beykoz">Beykoz</option>
+              <option value="beylikdüzü">Beylikdüzü</option>
+              <option value="beyoğlu">Beyoğlu</option>
+              <option value="büyükçekmece">Büyükçekmece</option>
+              <option value="çatalca">Çatalca</option>
+              <option value="çekmeköy">Çekmeköy</option>
+              <option value="esenler">Esenler</option>
+              <option value="esenyurt">Esenyurt</option>
+              <option value="eyüpsultan">Eyüpsultan</option>
+              <option value="fatih">Fatih</option>
+              <option value="gaziosmanpaşa">Gaziosmanpaşa</option>
+              <option value="güngören">Güngören</option>
+              <option value="kadıköy">Kadıköy</option>
+              <option value="kağıthane">Kağıthane</option>
+              <option value="kartal">Kartal</option>
+              <option value="küçükçekmece">Küçükçekmece</option>
+              <option value="maltepe">Maltepe</option>
+              <option value="pendik">Pendik</option>
+              <option value="sancaktepe">Sancaktepe</option>
+              <option value="sarıyer">Sarıyer</option>
+              <option value="silivri">Silivri</option>
+              <option value="sultanbeyli">Sultanbeyli</option>
+              <option value="sultangazi">Sultangazi</option>
+              <option value="şile">Şile</option>
+              <option value="şişli">Şişli</option>
+              <option value="tuzla">Tuzla</option>
+              <option value="ümraniye">Ümraniye</option>
+              <option value="üsküdar">Üsküdar</option>
+              <option value="zeytinburnu">Zeytinburnu</option>
+            </select>
+          </div>
+          <div class="col-lg-3">
+            <label for="min-ücret" class="col-12  col-form-label"
+              >Saatlik Ücret</label
+            >
+            <div class="row">
+              <div class="col-sm-5 col-md-2 col-lg-5">
+                <input
+                  id="min-ücret"
+                  type="number"
+                  class="form-control"
+                  placeholder="min"
+                  aria-label="min ücret"
+                  name="minUcret"
+                />
+              </div>
+              -
+              <div class="col-sm-5 col-md-2 col-lg-5">
+                <input
+                  id="max-ücret"
+                  type="number"
+                  class="form-control"
+                  placeholder="max"
+                  aria-label="max ücret"
+                  name="maxUcret"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <label for="siralama" class="col-sm-2 col-form-label">Sıralama</label>
+            <select
+
+            name="siralama"
+            class="form-select"
+            aria-label="Default select example"
+          >
+            <option value=""selected>Sıralama Seçiniz</option>
+            <option value="(mevcut_arac_sayisi* 100.0) / (kapasite) DESC">
+            Yoğunluk: Yüksekten-Düşüğe 
+            </option>
+            <option value="(mevcut_arac_sayisi* 100.0) / (kapasite) ">
+             Yoğunluk: Düşükten-Yükseğe 
+            </option>
+            <option value="saatlik_ücret DESC">Ücret: Yüksekten-Düşüğe </option>
+            <option value="saatlik_ücret ">
+            Ücret: Düşükten-Yükseğe 
+            </option>
+          </select>
+        </div>
+        <div class="row mt-5">
+          <div class="col-2 col-sm-12">
+            <button class="btn btn-dark" type="submit">Filteri Uygula</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+    <div class="container-fluid main-content filter">
+      <button
+        class="btn btn-dark"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasWithBothOptions"
+        aria-controls="offcanvasWithBothOptions"
+      >
+        Filtrele
+      </button>
+    </div>
+
+    <div
+      class="offcanvas offcanvas-end"
+      data-bs-scroll="true"
+      tabindex="-1"
+      id="offcanvasWithBothOptions"
+      aria-labelledby="offcanvasWithBothOptionsLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
+          Filter
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="container-fluid">
+          <form action="" method="post">
+            <div class="row">
+              <label for="ilce" class="col-sm-2 col-form-label">İlçe</label>
+              <select
+                name="ilce"
+                class="form-select"
+                aria-label="Default select example"
+              >
+                <option value="" selected>İlçe Seçiniz</option>
+                <option value="adalar">Adalar</option>
+                <option value="arnavutköy">Arnavutköy</option>
+                <option value="ataşehir">Ataşehir</option>
+                <option value="avcılar">Avcılar</option>
+                <option value="bağcılar">Bağcılar</option>
+                <option value="bahçelievler">Bahçelievler</option>
+                <option value="bakırköy">Bakırköy</option>
+                <option value="başakşehir">Başakşehir</option>
+                <option value="bayrampaşa">Bayrampaşa</option>
+                <option value="beşiktaş">Beşiktaş</option>
+                <option value="beykoz">Beykoz</option>
+                <option value="beylikdüzü">Beylikdüzü</option>
+                <option value="beyoğlu">Beyoğlu</option>
+                <option value="büyükçekmece">Büyükçekmece</option>
+                <option value="çatalca">Çatalca</option>
+                <option value="çekmeköy">Çekmeköy</option>
+                <option value="esenler">Esenler</option>
+                <option value="esenyurt">Esenyurt</option>
+                <option value="eyüpsultan">Eyüpsultan</option>
+                <option value="fatih">Fatih</option>
+                <option value="gaziosmanpaşa">Gaziosmanpaşa</option>
+                <option value="güngören">Güngören</option>
+                <option value="kadıköy">Kadıköy</option>
+                <option value="kağıthane">Kağıthane</option>
+                <option value="kartal">Kartal</option>
+                <option value="küçükçekmece">Küçükçekmece</option>
+                <option value="maltepe">Maltepe</option>
+                <option value="pendik">Pendik</option>
+                <option value="sancaktepe">Sancaktepe</option>
+                <option value="sarıyer">Sarıyer</option>
+                <option value="silivri">Silivri</option>
+                <option value="sultanbeyli">Sultanbeyli</option>
+                <option value="sultangazi">Sultangazi</option>
+                <option value="şile">Şile</option>
+                <option value="şişli">Şişli</option>
+                <option value="tuzla">Tuzla</option>
+                <option value="ümraniye">Ümraniye</option>
+                <option value="üsküdar">Üsküdar</option>
+                <option value="zeytinburnu">Zeytinburnu</option>
+              </select>
+            </div>
+            <div class="row mt-5">
+              <label for="min-kapasite" class="col-sm-2 col-form-label"
+                >Saatlik Ücret</label
+              >
+
+              <input
+                style="width: 25%"
+                id="min-ücret"
+                type="number"
+                class="form-control"
+                placeholder="min"
+                aria-label="min ücret"
+                name="minUcret"
+              />
+              <p class="col-1">-</p>
+
+              <input
+                style="width: 25%"
+                id="max-ücret"
+                type="number"
+                class="form-control"
+                placeholder="max"
+                aria-label="max ücret"
+                name="maxUcret"
+              />
+            </div>
+            <div class="row mt-5">
+              <label for="siralama" class="col-sm-12 col-form-label">Sıralama</label>
+              <select
+
+                name="siralama"
+                class="form-select"
+                aria-label="Default select example"
+              >
+                <option value=""selected>Sıralama Seçiniz</option>
+                <option value="(mevcut_arac_sayisi* 100.0) / (kapasite) DESC">
+                Yoğunluk: Yüksekten-Düşüğe 
+                </option>
+                <option value="(mevcut_arac_sayisi* 100.0) / (kapasite) ">
+                 Yoğunluk: Düşükten-Yükseğe 
+                </option>
+                <option value="saatlik_ücret DESC">Ücret: Yüksekten-Düşüğe </option>
+                <option value="saatlik_ücret ">
+                Ücret: Düşükten-Yükseğe 
+                </option>
+              </select>
+            </div>
+            <div class="row mt-5">
+              <button class="btn btn-dark" type="submit">Filteri Uygula</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid main-content">
+      <table class="table align-middle table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Otopark Adı</th>
+            <th>Otopark Konum</th>
+            <th>Kapasite</th>
+            <th>Mevcut Araç Sayısı</th>
+            <th>Doluluk Oranı</th>
+            <th>Saatlik Ücreti</th>
+            
+            <th>Mevcut Boş Yer</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% result.forEach(element => { %>
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-2">
+                  <p class="fw-bold pl-2 mb-1"><%= element.name %></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="normal mb-1"><%= element.ilce %></p>
+            </td>
+            <td>
+              <p class="normal mb-1"><%= element.kapasite %> </p>
+            </td>
+            <td>
+              <p class="normal mb-1"><%= element.mevcut_arac_sayisi %> </p>
+            </td>
+            <td>
+              <p class="normal mb-1"><%= element.doluluk_orani %></p>
+            </td>
+            
+            <td>
+              <p class="normal mb-1"><%= element.saatlik_ücret %></p>
+            </td>
+
+            <td>
+              <!-- Edit button -->
+              <button
+                id= "<%= element.otopark_id %>"
+                class="btn btn-warning table-buttons table-edit-buttons"
+                title="düzenle"
+              >
+                <i class="uil uil-edit"></i>
+              </button>
+              <!-- Delete button -->
+              <button
+                id="<%= element.otopark_id %>"
+                class="btn btn-danger table-buttons table-delete-buttons"
+                title="sil"
+              >
+                <i class="uil uil-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+    for (var i = 0; i < document.querySelectorAll(".table-buttons").length; i++) {
+      document.querySelectorAll(".table-delete-buttons")[i].addEventListener("click", function () {
+        event.preventDefault(); 
+        if (confirm('Veriyi silmek istediğinize emin misiniz?')) {
+          
+          window.location.href = '/deleteOtopark/'+this.id;
+  } 
+      }
+      );
+      document.querySelectorAll(".table-edit-buttons")[i].addEventListener("click", function () {
+        event.preventDefault(); 
+        if (confirm('Veriyi düzenlemek istediğinize emin misiniz?')) {
+          
+          window.location.href = '/editOtopark/'+this.id;
+  } 
+      });
+    }</script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

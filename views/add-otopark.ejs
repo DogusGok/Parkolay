@@ -38,7 +38,7 @@
     id="int"
     style="background-image: url('/images/parkback.jpg'); height: 100vh"
   >
-    <%- include("./partials/user-sidebar") %>
+    <%- include("./partials/company-sidebar") %>
     <section class="main-content">
       <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -57,14 +57,13 @@
                 <% } %>
                 <div class="d-flex justify-content-center">
                   <form action="" method="post">
-
                     <div class="form-outline mb-4">
                       <label for="name" class="form-label">Otopark İsmi</label>
-                          <input
-                            class="form-control form-control-lg"
-                            name="name"
-                            type="text"
-                          />
+                      <input
+                        class="form-control form-control-lg"
+                        name="name"
+                        type="text"
+                      />
                     </div>
                     <div class="form-outline mb-4">
                       <select
@@ -72,49 +71,49 @@
                         class="form-select"
                         aria-label="Default select example"
                       >
-                      <option selected>İlçe Seçiniz</option>
-                      <option value="adalar">Adalar</option>
-                      <option value="arnavutköy">Arnavutköy</option>
-                      <option value="ataşehir">Ataşehir</option>
-                      <option value="avcılar">Avcılar</option>
-                      <option value="bağcılar">Bağcılar</option>
-                      <option value="bahçelievler">Bahçelievler</option>
-                      <option value="bakırköy">Bakırköy</option>
-                      <option value="başakşehir">Başakşehir</option>
-                      <option value="bayrampaşa">Bayrampaşa</option>
-                      <option value="beşiktaş">Beşiktaş</option>
-                      <option value="beykoz">Beykoz</option>
-                      <option value="beylikdüzü">Beylikdüzü</option>
-                      <option value="beyoğlu">Beyoğlu</option>
-                      <option value="büyükçekmece">Büyükçekmece</option>
-                      <option value="çatalca">Çatalca</option>
-                      <option value="çekmeköy">Çekmeköy</option>
-                      <option value="esenler">Esenler</option>
-                      <option value="esenyurt">Esenyurt</option>
-                      <option value="eyüpsultan">Eyüpsultan</option>
-                      <option value="fatih">Fatih</option>
-                      <option value="gaziosmanpaşa">Gaziosmanpaşa</option>
-                      <option value="güngören">Güngören</option>
-                      <option value="kadıköy">Kadıköy</option>
-                      <option value="kağıthane">Kağıthane</option>
-                      <option value="kartal">Kartal</option>
-                      <option value="küçükçekmece">Küçükçekmece</option>
-                      <option value="maltepe">Maltepe</option>
-                      <option value="pendik">Pendik</option>
-                      <option value="sancaktepe">Sancaktepe</option>
-                      <option value="sarıyer">Sarıyer</option>
-                      <option value="silivri">Silivri</option>
-                      <option value="sultanbeyli">Sultanbeyli</option>
-                      <option value="sultangazi">Sultangazi</option>
-                      <option value="şile">Şile</option>
-                      <option value="şişli">Şişli</option>
-                      <option value="tuzla">Tuzla</option>
-                      <option value="ümraniye">Ümraniye</option>
-                      <option value="üsküdar">Üsküdar</option>
-                      <option value="zeytinburnu">Zeytinburnu</option>
+                        <option selected>İlçe Seçiniz</option>
+                        <option value="adalar">Adalar</option>
+                        <option value="arnavutköy">Arnavutköy</option>
+                        <option value="ataşehir">Ataşehir</option>
+                        <option value="avcılar">Avcılar</option>
+                        <option value="bağcılar">Bağcılar</option>
+                        <option value="bahçelievler">Bahçelievler</option>
+                        <option value="bakırköy">Bakırköy</option>
+                        <option value="başakşehir">Başakşehir</option>
+                        <option value="bayrampaşa">Bayrampaşa</option>
+                        <option value="beşiktaş">Beşiktaş</option>
+                        <option value="beykoz">Beykoz</option>
+                        <option value="beylikdüzü">Beylikdüzü</option>
+                        <option value="beyoğlu">Beyoğlu</option>
+                        <option value="büyükçekmece">Büyükçekmece</option>
+                        <option value="çatalca">Çatalca</option>
+                        <option value="çekmeköy">Çekmeköy</option>
+                        <option value="esenler">Esenler</option>
+                        <option value="esenyurt">Esenyurt</option>
+                        <option value="eyüpsultan">Eyüpsultan</option>
+                        <option value="fatih">Fatih</option>
+                        <option value="gaziosmanpaşa">Gaziosmanpaşa</option>
+                        <option value="güngören">Güngören</option>
+                        <option value="kadıköy">Kadıköy</option>
+                        <option value="kağıthane">Kağıthane</option>
+                        <option value="kartal">Kartal</option>
+                        <option value="küçükçekmece">Küçükçekmece</option>
+                        <option value="maltepe">Maltepe</option>
+                        <option value="pendik">Pendik</option>
+                        <option value="sancaktepe">Sancaktepe</option>
+                        <option value="sarıyer">Sarıyer</option>
+                        <option value="silivri">Silivri</option>
+                        <option value="sultanbeyli">Sultanbeyli</option>
+                        <option value="sultangazi">Sultangazi</option>
+                        <option value="şile">Şile</option>
+                        <option value="şişli">Şişli</option>
+                        <option value="tuzla">Tuzla</option>
+                        <option value="ümraniye">Ümraniye</option>
+                        <option value="üsküdar">Üsküdar</option>
+                        <option value="zeytinburnu">Zeytinburnu</option>
                       </select>
                     </div>
-                    
+
                     <div class="form-outline mb-4">
                       <div class="row">
                         <div class="col-lg-6">
@@ -152,7 +151,7 @@
                           />
                         </div>
                       </div>
-                      <hr class="mt-4 mb-4"/>
+                      <hr class="mt-4 mb-4" />
                       <div class="row mt-2">
                         <div class="col-lg-6">
                           <label for="kapasite" class="ml-2">Kapasite</label>
