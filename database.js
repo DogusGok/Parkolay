@@ -215,7 +215,6 @@ exports.getAllParkForUser = (callback) => {
     "SELECT otopark_id,otopark.name,Address.ilce,otopark.kapasite,otopark.mevcut_arac_sayisi,round((mevcut_arac_sayisi* 100.0) / (kapasite))AS doluluk_orani,otopark.saatlik_ücret FROM otopark INNER JOIN Address ON Address.address_id=otopark.address_id ",
     (err, results) => {
       if (err) throw err;
-
       return callback(results);
     }
   );
@@ -333,6 +332,97 @@ exports.getAvailableVehicle = (account_id, callback) => {
         throw err;
       } else {
         return callback(results);
+      }
+    }
+  );
+};
+//----------------ADMİN İŞLEMLERİ------------------
+exports.removeAccount = (account_type, id, callback) => {
+  connection.query(
+    "DELETE FROM" +
+      account_type +
+      "WHERE" +
+      account_type +
+      ".account_id = " +
+      connection.escape(id),
+    (err, results) => {
+      if (err) throw Error;
+      else {
+        return callback(true);
+      }
+    }
+  );
+};
+
+exports.updateUserInfo = (name, surname, tel, id, callback) => {
+  connection.query(
+    "UPDATE users SET name = " +
+      connection.escape(name) +
+      "," +
+      " surname= " +
+      connection.escape(surname) +
+      "," +
+      "tel_no=" +
+      connection.escape(tel) +
+      " WHERE account_id=" +
+      id,
+    (err, result) => {
+      if (err) throw Error;
+      else {
+        return callback(true);
+      }
+    }
+  );
+};
+
+exports.updateCompanyInfo = (name, tel, id, callback) => {
+  connection.query(
+    "UPDATE company SET company_name = " +
+      connection.escape(name) +
+      "," +
+      " tel_no= " +
+      connection.escape(tel) +
+      " WHERE account_id=" +
+      id,
+    (err, result) => {
+      if (err) throw Error;
+      else {
+        return callback(true);
+      }
+    }
+  );
+};
+
+exports.getAllUserNumb = (callback) => {
+  connection.query(
+    "SELECT (SELECT COUNT(user_id) FROM users) as user_number,(SELECT COUNT(company_id) FROM company) as company_number",
+    (err, result) => {
+      return callback(result);
+    }
+  );
+};
+exports.getAll = (account_type, callback) => {
+  connection.query(
+    "SELECT * FROM " +
+      account_type +
+      " INNER JOIN accounts WHERE " +
+      account_type +
+      ".account_id=accounts.account_id",
+    (err, result) => {
+      return callback(result);
+    }
+  );
+};
+exports.settingsAccount = (account_type, id, callback) => {
+  connection.query(
+    "SELECT * FROM " +
+      account_type +
+      " WHERE account_id=" +
+      connection.escape(id),
+    (err, result) => {
+      if (err) throw Error;
+      else {
+        return callback(result);
       }
     }
   );

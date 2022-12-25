@@ -133,6 +133,10 @@ app.get("/user-araclar", function (req, res) {
     } else res.redirect("/");
   });
 });
+app.get("/:account_id/parkEt/:otopark_id/:plaka", function (req, res) {
+  if (session != undefined && session.userId == req.params.account_id) {
+  } else res.redirect("/");
+});
 app.post("/user/addArac/:userId", function (req, res) {
   const plaka = req.body.carplate;
   const fuelType = req.body.fuel;
@@ -272,9 +276,18 @@ app.post("/:accountType/Otoparklar/:userId", (req, res) => {
       siralama,
       (result) => {
         if (session != undefined && session.userId == req.params.userId) {
-          res.render(req.params.accountType + "-otoparklar", {
-            result: result,
-          });
+          if (req.params.accountType == "user") {
+            db.getAvailableVehicle(req.params.userId, (araclar) => {
+              res.render(req.params.accountType + "-otoparklar", {
+                parklar: result,
+                araclar: araclar,
+              });
+            });
+          } else {
+            res.render(req.params.accountType + "-otoparklar", {
+              result: result,
+            });
+          }
         } else res.redirect("/");
       }
     );
@@ -299,8 +312,76 @@ app.get("/deleteOtopark/:otoparkId", function (req, res) {
 app.get("/invoice", (req, res) => {
   res.render("invoice");
 });
+//---------------ADMİN PANELİ---------------------
 app.get("/admin", function (req, res) {
-  res.render("admin");
+  db.getAllUserNumb(function (result) {
+    var index = result[0].user_number;
+    res.render("admin", {
+      user_number: index,
+      company_number: result[0].company_number,
+    });
+  });
+});
+app.get("/admin/company-settings", (req, res) => {
+  db.getAll("company", (result) => {
+    if (result.length > 0) {
+      res.render("company-op", { results: result });
+    }
+  });
+});
+app.get("/admin/user-settings", (req, res) => {
+  db.getAll("users", function (result) {
+    if (result.length > 0) {
+      res.render("users-operation", { results: result });
+    }
+  });
+});
+app.get("/admin/user-settings/:id", (req, res) => {
+  db.settingsAccount("users", req.params.id, (result) => {
+    res.render("settings-user", { results: result[0] });
+  });
+});
+app.get("/admin/company-settings/:id", (req, res) => {
+  db.settingsAccount("company", req.params.id, (result) => {
+    res.render("settings-co", { results: result[0] });
+  });
+});
+
+app.post("/admin/company-settings/:id", (req, res) => {
+  var name = req.body.name;
+  var tel = req.body.tel;
+  db.updateCompanyInfo(name, tel, req.params.id, function (result) {
+    if (result) {
+      res.redirect("/admin/company-settings");
+    }
+  });
+});
+
+app.post("/admin/user-settings/:id", (req, res) => {
+  var name = req.body.name;
+  var sname = req.body.surname;
+  var tel = req.body.tel;
+  db.updateUserInfo(name, sname, tel, req.params.id, function (result) {
+    if (result) {
+      res.redirect("/admin/user-settings");
+    }
+  });
+});
+
+app.get("/admin/delete-user/:id", (req, res) => {
+  db.removeAccount("users", req.params.id, function (result) {
+    if (result) {
+      res.redirect("/admin/user-settings");
+    }
+  });
+});
+
+app.get("/admin/delete-company/:id", (req, res) => {
+  db.removeAccount("company", req.params.id, function (result) {
+    if (result) {
+      res.redirect("/admin/company-settings");
+    }
+  });
 });
 
 app.get("/logout", function (req, res) {
