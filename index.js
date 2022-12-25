@@ -7,6 +7,8 @@ const app = express();
 const _ = require("lodash");
 const db = require("./database");
 const { redirect } = require("statuses");
+const { add } = require("lodash");
+const { Admin } = require("mongodb");
 
 const ahour = 1000 * 60 * 60;
 app.use(
@@ -55,7 +57,7 @@ app.get("/addArac", function (req, res) {
 });
 
 app.get("/selectpark",(req,res)=>{
-  const ilce="bağcılar"
+  const ilce="bağcılar";
   db.getParkfromDistrict(ilce,(result)=>{
     res.render("select-park",{result:result});
   })
@@ -102,6 +104,80 @@ app.post("/user/addArac/:userId", function (req, res) {
     });
   } else res.redirect("/");
 });
+app.get("/admin/company-settings",(req,res)=>{
+  db.getAll("company",(result)=>{
+    if(result.length>0){
+      res.render("company-op",{results:result})
+    }
+  })
+})
+app.get("/admin/user-settings",(req,res)=>{
+  db.getAll("users",function(result){
+    if(result.length>0){
+      res.render("users-operation",{results:result});
+    }
+  })
+  
+})
+app.get("/admin/user-settings/:id",(req,res)=>{
+
+  db.settingsAccount("users",req.params.id,(result)=>{
+    
+    res.render("settings-user",{results:result[0]});
+  })
+  
+})
+app.get("/admin/company-settings/:id",(req,res)=>{
+
+  db.settingsAccount("company",req.params.id,(result)=>{
+    res.render("settings-co",{results:result[0]});
+  })
+  
+})
+
+app.post("/admin/company-settings/:id",(req,res)=>{
+  var name=req.body.name;
+  var tel=req.body.tel;
+  db.updateCompanyInfo(name,tel,req.params.id,function(result){
+    if(result){
+      res.redirect("/admin/company-settings");
+    }
+      
+    
+  })
+})
+
+app.post("/admin/user-settings/:id",(req,res)=>{
+  var name=req.body.name;
+  var sname=req.body.surname;
+  var tel=req.body.tel;
+  db.updateUserInfo(name,sname,tel,req.params.id,function(result){
+    if(result){
+      res.redirect("/admin/user-settings");
+    }
+  })
+})
+
+
+app.get("/admin/delete-user/:id",(req,res)=>{
+  db.removeAccount("users",req.params.id,function(result){
+    if(result){
+      res.redirect("/admin/user-settings");
+    }
+  })
+})
+
+app.get("/admin/delete-company/:id",(req,res)=>{
+  db.removeAccount("company",req.params.id,function(result){
+    if(result){
+      res.redirect("/admin/company-settings");
+    }
+  })
+})
+
+  
+
+
 app.get("/company/:id", function (req, res) {
   session = req.session;
   session.accountType = "company";
@@ -114,7 +190,11 @@ app.get("/company/:id", function (req, res) {
   }
 });
 app.get("/admin", function (req, res) {
-  res.render("admin");
+  
+  db.getAllUserNumb(function(result){
+    var index=result[0].user_number;
+    res.render("admin",{user_number:index,company_number:result[0].company_number});
+  });
 });
 app.get("/register", function (req, res) {
   res.render("register");
@@ -150,7 +230,7 @@ app.post("/register/:accountType", function (req, res) {
   const telNo = req.body.telNo;
   const pass = req.body.password;
   const repas = req.body.rpassword;
-  console.log(repas);
+  
   if (repas != pass) {
     if (accountType == "user") {
       res.render("user-register", { error: "Şifreler eşleşmiyor" });

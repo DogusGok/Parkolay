@@ -1,10 +1,13 @@
+const cookieParser = require("cookie-parser");
+const { call } = require("function-bind");
 var mysql = require("mysql");
 const connection = mysql.createPool({
-  host: "remotemysql.com",
-  user: "xRrfTdEb8w",
-  password: "E9Dj4rlvkJ",
-  database: "xRrfTdEb8w",
+  host: "db4free.net",
+  user: "parkolay_user",
+  password: "q3SyKnUkVkE3E*_",
+  database: "parkolay"
 });
+
 
 exports.isEmailExist = (mail, callback) => {
   var a = connection.query(
@@ -170,7 +173,7 @@ exports.insertPark=(isim,ilce,mahalle,cadde,sokak,no,kapasite,ucret,callback)=>{
       else{
         connection.query(
           "INSERT INTO otopark (name,kapasite,saatlik_ücret,address_id) VALUES(" +
-     
+      connection.escape(isim)+","+
       connection.escape(kapasite) +","+
       connection.escape(ucret)+","+
       connection.escape(result.insertId)+
@@ -200,6 +203,89 @@ exports.getParkfromDistrict=(ilce,callback)=>{
 
     )}
 
-  exports.getInvoice=()=>{
+  exports.getInvoice=(user_id,callback)=>{
+    connection.query(
+      "SELECT users.name,users.tel_no,invoice.tutar from users INNER JOIN invoice ON invoice.user_id=users.user_id WHERE users.user_id="+
+      connection.escape(user_id),
+      (err,result)=>{
+        if (err) throw Error
+        else{
+          return callback(result);
+        }
+      }
+    )
+    
 
   }
+
+
+  exports.removeAccount=(account_type,id,callback)=>{
+    connection.query(
+      "DELETE FROM"+account_type +"WHERE"+ account_type+".account_id = "+
+      connection.escape(id),
+      (err,results)=>{
+        if(err) throw Error
+        else{
+          return callback(true);
+        }
+      }
+    )
+  }
+
+  exports.updateUserInfo=(name,surname,tel,id,callback)=>{
+      connection.query(
+        "UPDATE users SET name = "+connection.escape(name)+","+" surname= "+connection.escape(surname)+","+"tel_no="+connection.escape(tel)+" WHERE account_id="+id,
+        (err,result)=>{
+         if(err) throw Error
+         else{
+           return callback(true);
+         }
+        }
+       )
+  }
+
+exports.updateCompanyInfo=(name,tel,id,callback)=>{
+    connection.query(
+      "UPDATE company SET company_name = "+connection.escape(name)+","+" tel_no= "+connection.escape(tel)+" WHERE account_id="+id,
+      (err,result)=>{
+       if(err) throw Error
+       else{
+         return callback(true);
+       }
+      }
+     )
+}
+
+
+  exports.getAllUserNumb=(callback)=>{
+    connection.query(
+      "SELECT (SELECT COUNT(user_id) FROM users) as user_number,(SELECT COUNT(company_id) FROM company) as company_number",
+      (err,result)=>{
+      
+        return callback(result);
+      }
+    )
+  }
+  exports.getAll=(account_type,callback)=>{
+    connection.query(
+      "SELECT * FROM "+account_type+" INNER JOIN accounts WHERE "+account_type+".account_id=accounts.account_id"
+      ,(err,result)=>{
+        
+        return callback(result);
+      }
+    )
+  }
+  exports.settingsAccount=(account_type,id,callback)=>{
+    connection.query(
+      "SELECT * FROM "+account_type+" WHERE account_id="+
+      connection.escape(id),
+      (err,result)=>{
+        if (err) throw Error;
+        else{
+          return callback(result);
+        }
+      }
+    )
+
+  }
+  
