@@ -221,11 +221,11 @@ exports.getAllParkForUser = (callback) => {
 };
 exports.deleteOtopark = (otoparkId, callback) => {
   connection.query(
-    "DELETE FROM otopark WHERE otopark_id=" + connection.escape(otoparkId),
+    "DELETE FROM otopark WHERE otopark_id="+ connection.escape(otoparkId),
     (err, results) => {
-      if (err) throw Error;
+      if (err) throw err;
       else {
-        return callback(results);
+        return callback(true);
       }
     }
   );
@@ -395,20 +395,23 @@ exports.updateCompanyInfo = (name, tel, id, callback) => {
 
 exports.getAllUserNumb = (callback) => {
   connection.query(
-    "SELECT (SELECT COUNT(user_id) FROM users) as user_number,(SELECT COUNT(company_id) FROM company) as company_number",
+    "SELECT (SELECT COUNT(user_id) FROM users) as user_number,(SELECT COUNT(company_id) FROM company) as company_number,(SELECT COUNT(otopark_id) FROM otopark) as otopark_number",
     (err, result) => {
       return callback(result);
     }
   );
 };
-exports.getAll = (account_type, callback) => {
+exports.getAll = (account_type,callback) => {
   connection.query(
-    "SELECT * FROM " +
-      account_type +
+      "SELECT * FROM " +
+      account_type+
       " INNER JOIN accounts WHERE " +
-      account_type +
-      ".account_id=accounts.account_id",
+      account_type+
+      ".account_id=accounts.account_id"
+      ,
     (err, result) => {
+      if (err) throw err;
+      
       return callback(result);
     }
   );
@@ -428,3 +431,5 @@ exports.settingsAccount = (account_type, id, callback) => {
   );
 };
 exports.getInvoice = () => {};
+
+

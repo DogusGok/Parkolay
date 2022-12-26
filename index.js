@@ -319,6 +319,7 @@ app.get("/admin", function (req, res) {
     res.render("admin", {
       user_number: index,
       company_number: result[0].company_number,
+      otopark_number:result[0].otopark_number
     });
   });
 });
@@ -336,6 +337,13 @@ app.get("/admin/user-settings", (req, res) => {
     }
   });
 });
+app.get("/admin/company-settings/show-parks/:id",(req,res)=>{
+  db.getAllParkForCompany(req.params.id,function(result){
+    console.log(result);
+    res.render("show-parks",{results:result})
+  })
+  
+})
 app.get("/admin/user-settings/:id", (req, res) => {
   db.settingsAccount("users", req.params.id, (result) => {
     res.render("settings-user", { results: result[0] });
@@ -357,6 +365,13 @@ app.post("/admin/company-settings/:id", (req, res) => {
   });
 });
 
+app.post("/admin/company-settings/show-parks/:id",(req,res)=>{
+  var name=req.body.name;
+  var ilce=req.body.ilce;
+  var cap=req.body.cap;
+
+})
+
 app.post("/admin/user-settings/:id", (req, res) => {
   var name = req.body.name;
   var sname = req.body.surname;
@@ -375,6 +390,15 @@ app.get("/admin/delete-user/:id", (req, res) => {
     }
   });
 });
+app.get("/admin/delete-park/:id", (req,res)=>{
+  console.log(req.params.id)
+  db.deleteOtopark(req.params.id,function(resılt){
+    res.redirect("/admin/company-settings");
+  });
+})
+
+
+
 
 app.get("/admin/delete-company/:id", (req, res) => {
   db.removeAccount("company", req.params.id, function (result) {
