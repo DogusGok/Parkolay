@@ -385,6 +385,27 @@ exports.updateCompanyInfo = (name, tel, id, callback) => {
       " WHERE account_id=" +
       id,
     (err, result) => {
+      if (err) throw err;
+      else {
+        return callback(true);
+      }
+    }
+  );
+};
+//name,kapasite,saatlik_ücret,address_id,company_id
+exports.updateOtoparkInfo = (name, cap, price,id,callback) => {
+  connection.query(
+    "UPDATE otopark SET name = " +
+      connection.escape(name) +
+      "," +
+      " kapasite = "+
+      connection.escape(cap) +
+      "," +
+      " saatlik_ücret = " +
+      connection.escape(price) +
+      " WHERE otopark_id=" +
+      id,
+    (err, result) => {
       if (err) throw Error;
       else {
         return callback(true);
@@ -392,6 +413,7 @@ exports.updateCompanyInfo = (name, tel, id, callback) => {
     }
   );
 };
+
 
 exports.getAllUserNumb = (callback) => {
   connection.query(

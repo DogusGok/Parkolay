@@ -7,7 +7,7 @@ const app = express();
 const _ = require("lodash");
 const db = require("./database");
 const { redirect } = require("statuses");
-const { functions } = require("lodash");
+const { functions, toInteger } = require("lodash");
 
 const ahour = 1000 * 60 * 60;
 app.use(
@@ -339,7 +339,6 @@ app.get("/admin/user-settings", (req, res) => {
 });
 app.get("/admin/company-settings/show-parks/:id",(req,res)=>{
   db.getAllParkForCompany(req.params.id,function(result){
-    console.log(result);
     res.render("show-parks",{results:result})
   })
   
@@ -367,9 +366,16 @@ app.post("/admin/company-settings/:id", (req, res) => {
 
 app.post("/admin/company-settings/show-parks/:id",(req,res)=>{
   var name=req.body.name;
-  var ilce=req.body.ilce;
-  var cap=req.body.cap;
+  var cap=toInteger(req.body.cap);
+  var pric=toInteger(req.body.price);
+  var otoid=req.body.otoid;
 
+  
+  db.updateOtoparkInfo(name,cap,pric,otoid,function(result){
+    if(result){
+      res.redirect("/admin/company-settings/show-parks/"+req.params.id);
+    }
+  })
 })
 
 app.post("/admin/user-settings/:id", (req, res) => {
@@ -391,7 +397,7 @@ app.get("/admin/delete-user/:id", (req, res) => {
   });
 });
 app.get("/admin/delete-park/:id", (req,res)=>{
-  console.log(req.params.id)
+  
   db.deleteOtopark(req.params.id,function(resılt){
     res.redirect("/admin/company-settings");
   });
