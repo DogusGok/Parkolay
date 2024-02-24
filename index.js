@@ -12,7 +12,7 @@ const { functions, toInteger } = require("lodash");
 const ahour = 1000 * 60 * 60;
 app.use(
   sessions({
-    secret: "skimboyleprojeyi",
+    secret: "parkolay",
     saveUninitialized: true,
     cookie: { maxAge: ahour },
     resave: false,
